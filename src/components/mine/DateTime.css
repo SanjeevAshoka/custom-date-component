@@ -1,0 +1,391 @@
+.root {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.warning {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    translate: -50% 0%;
+    z-index: 100;
+    background: rgba(22, 22, 22, 0.7);
+    padding: 0.3rem 1rem;
+    border-radius: 0.4rem;
+    color: white;
+    font-weight: bold;
+}
+
+.yearsAndMonth {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn {
+    font-size: 1rem;
+    padding-inline: 0.8rem;
+    border: 2px solid rgba(22, 22, 22, 0.3);
+    border-radius: 0.2rem;
+    transition: border 0.4s ease, background 0.4s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border: 2px solid rgba(22, 22, 22, 0.2);
+    background: rgba(22, 22, 22, 0.3);
+}
+
+.yearSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.monthContentSection {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3rem;
+}
+
+.monthSection {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.selectedYear {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    border: 1px solid #222222;
+    border-radius: 0.5rem;
+    padding-inline: 0.8rem;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.4s ease;
+}
+
+.selectedYear:hover {
+    background: rgba(22, 22, 22, 0.3);
+}
+
+.selectedYear>p {
+    margin: 0;
+    padding: 0;
+}
+
+.arrowIcons {
+    display: flex;
+}
+
+.dropdown-icon {
+    transition: transform 0.4s ease;
+    transform-origin: center;
+}
+
+.rotate-down {
+    transform: rotate(0deg);
+}
+
+.rotate-right {
+    transform: rotate(90deg);
+}
+
+.dateRes {
+    font-size: 0.9rem;
+    font-weight: 550;
+}
+
+.yearsList {
+    border: 1px solid rgba(22, 22, 22, 0.1);
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background: lightgrey;
+    left: 102%;
+    border-radius: 0.8rem;
+    padding-inline: 0.2rem;
+    transition: border 0.4s ease;
+    width: 17rem;
+}
+
+.yearsList:hover {
+    border: 1px solid rgba(22, 22, 22, 0.3);
+}
+
+.selectedYear {
+    background: rgba(22, 22, 22, 0.2);
+    border: none;
+}
+
+.listContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.yearItem {
+    margin: 0.2rem;
+    margin-inline: 0.2rem;
+    border-radius: 0.4rem;
+    padding: 0rem 0.4rem;
+}
+
+.yearItem:hover {
+    background-color: rgba(22, 22, 22, 0.3);
+    cursor: pointer;
+}
+
+.listBtn {
+
+    transform: translate(0, calc(50% - 11px));
+}
+
+.btnList {
+    padding-inline: 0.5rem;
+    border: 2px solid rgba(22, 22, 22, 0.3);
+    border-radius: 0.2rem;
+    transition: border 0.4s ease, background 0.4s ease;
+    cursor: pointer;
+}
+
+.btnList:hover {
+    border: 2px solid rgba(22, 22, 22, 0.2);
+    background: rgba(22, 22, 22, 0.3);
+}
+
+.select-container {
+    position: relative;
+    display: inline-block;
+
+}
+
+.select-container select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.select-container select:hover,
+.select-container select:focus {
+    border-color: rgba(22, 22, 22, 0.2);
+    ;
+    box-shadow: 0 0 0 2px rgba(22, 22, 22, 0.2);
+    outline: none;
+}
+
+
+.select-container::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: rgba(22, 22, 22, 0.4);
+    pointer-events: none;
+}
+
+.select-container select {
+    padding-right: 30px;
+}
+
+.monthUiSection {
+    position: relative;
+}
+
+.weekDaySection {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.monthHeader {
+    text-align: center;
+    background: rgba(22, 22, 22, 0.3);
+    border-radius: 0.5rem;
+}
+
+.dayItem {
+    padding: 10px;
+    margin: 0.25rem;
+    cursor: default;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 0.4rem;
+    transition: background-color 0.4s ease;
+}
+
+.defaultCursor {
+    cursor: pointer;
+}
+
+.dayelse {
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.dayelse.defaultCursor:hover {
+    background-color: rgba(22, 22, 22, 0.3);
+}
+
+.selectedColor {
+    background-color: rgba(22, 22, 22, 0.3);
+}
+
+.todaysDate {
+    background-color: rgba(22, 22, 22, 0.2);
+}
+
+.iconsLeftRight {
+    position: absolute;
+    display: flex;
+    top: 28rem;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    left: 50%;
+    translate: -60px 0%;
+}
+
+.arrowIconsLeftRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(22, 22, 22, 0.2);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+.arrowIconsLeftRight path {
+    width: 22px;
+    height: 22px;
+}
+
+.arrowIconsLeftRight:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: rgba(22, 22, 22, 0.4);
+}
+
+.startDateSection {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.startDatePara>p {
+    margin-bottom: 0.2rem;
+}
+
+.startEndPara {
+    background: rgba(22, 22, 22, 0.1);
+    border-radius: 0.5rem;
+    padding-inline: 6rem;
+}
+
+/* last section */
+
+.startEndDate {
+    display: flex;
+    margin-top: 5rem;
+    flex-direction: column;
+
+}
+
+.headerEnd {
+    font-size: 1rem;
+    font-weight: bold;
+    background: rgba(22, 22, 22, 0.4);
+    word-spacing: 0.2rem;
+    margin-inline: 1rem;
+}
+
+.endDateSection {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.endSectionBtnAndInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.leftBtnAndInput {
+    text-align: left;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.content>p {
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    padding: 0;
+    width: 3rem;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgba(22, 22, 22, 0.2);
+    text-align: center;
+    font-size: 1rem;
+    transition: border 0.4s ease;
+}
+
+input:hover,
+input:focus {
+    border-bottom: 2px solid rgba(22, 22, 22, 0.4);
+}
+
+@media (max-width: 825px) {
+    .monthContentSection {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .iconsLeftRight {
+        top: 50rem;
+    }
+
+    .yearsList {
+        z-index: 4;
+    }
+}
+
+@media (max-width: 650px) {
+    .startDateSection {
+        flex-direction: column;
+
+    }
+
+    .yearsAndMonth {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .yearsList {
+        top: 100%;
+        left: 50%;
+        translate: -50% 6%;
+    }
+}
