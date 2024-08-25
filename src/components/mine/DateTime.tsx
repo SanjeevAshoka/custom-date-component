@@ -266,8 +266,8 @@ const DateTime: React.FC = () => {
                     </div>
                 </div>
                 <div className="selectedDateList">
-                    <div><span className='selectedDateListHeader'>Selected Dates</span></div>
-                    <div className='selectedDatesListItems'>
+                    <div className='selectedDateListHeaderParent'><span className='selectedDateListHeader'>Selected Dates</span></div>
+                    { selectedStartDate && <div className='selectedDatesListItems'>
                         {
                             daysSectionData?.length > 0 && daysSectionData.map((item: DaysSectionDataModel) =>
                                 item.daysArray.map((date: { date: Date | null; selected: boolean }, indDate: number) =>
@@ -275,7 +275,7 @@ const DateTime: React.FC = () => {
                                 )
                             )
                         }
-                    </div>
+                    </div>}
                 </div>
             </div>
 
