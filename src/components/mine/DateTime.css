@@ -96,7 +96,13 @@
 
 .dateRes {
     font-size: 0.9rem;
-    font-weight: 550;
+    padding: 0.2rem 1rem;
+    margin: 0.25rem;
+    cursor: default;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 0.4rem;
+    transition: background-color 0.4s ease;
 }
 
 .yearsList {
@@ -288,11 +294,11 @@
 }
 
 .startDatePara>p {
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.4rem;
 }
 
 .startEndPara {
-    background: rgba(22, 22, 22, 0.1);
+    background: rgba(22, 22, 22, 0.25);
     border-radius: 0.5rem;
     padding-inline: 6rem;
 }
@@ -311,10 +317,11 @@
 .headerEnd {
     font-size: 1rem;
     font-weight: bold;
-    background: rgba(22, 22, 22, 0.4);
+    background: rgba(22, 22, 22, 0.3);
     word-spacing: 0.2rem;
     margin-inline: 1rem;
     padding: 0.5rem 0rem;
+    color: rgba(22, 22, 22, 0.8);
 }
 
 .endDateSection {

@@ -16,9 +16,6 @@ const DateTime: React.FC = () => {
     const [showWarn, setShowWarn] = useState<string>('');
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
-    const handleResize = () => {
-        setScreenWidth(window.innerWidth);
-    };
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => {
@@ -32,41 +29,12 @@ const DateTime: React.FC = () => {
     useEffect(() => {
         setYearsArr(() => getYearList(currYear));
     }, [currYear]);
+
     useEffect(() => {
         setDaysSectionData(() => getDaysSectionData(currYear, month));
-    }, [currYear, month])
-    const handleListBtnClick = (increment: boolean) => {
-        if (increment) {
-            setYearsArr(getYearList(yearsArr[yearsArr.length - 1], true, false));
-        }
-        else {
-            setYearsArr(getYearList(yearsArr[0], false, true));
-        }
-    }
+    }, [currYear, month]);
 
-    const handleYearSelected = (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.tagName === 'SPAN') {
-            const clickedYear = target.textContent;
-            if (clickedYear) {
-                setCurrentYear(() => parseInt(clickedYear));
 
-            }
-        }
-        setSelectingYear(() => !selectingYear);
-
-    }
-    const handleYearInc = (increment: boolean) => {
-        if (increment) { setCurrentYear((curr) => curr + 1); }
-        else { setCurrentYear((curr) => curr - 1); }
-    }
-    const LeftRightIconClick = (increment: boolean) => {
-        const result: { year: number; month: number } = getMonth(currYear, month, increment);
-        if (result.year !== currYear) {
-            setCurrentYear(() => result.year);
-        }
-        setMonth(result.month);
-    }
     useEffect(() => {
         const result = dateRangeSelectedByUser(daysSectionData);
         if (result?.rangeSelected) {
@@ -77,6 +45,43 @@ const DateTime: React.FC = () => {
             setSelectedEndDate(() => 'No Consecutive Dates Selected');
         }
     }, [daysSectionData]);
+
+    const handleResize = () => {
+        setScreenWidth(window.innerWidth);
+    };
+
+    const handleListBtnClick = (increment: boolean) => {
+        if (increment) {
+            setYearsArr(getYearList(yearsArr[yearsArr.length - 1], true, false));
+        }
+        else {
+            setYearsArr(getYearList(yearsArr[0], false, true));
+        }
+    };
+
+    const handleYearSelected = (event: React.MouseEvent<HTMLDivElement>) => {
+        const target = event.target as HTMLElement;
+        if (target.tagName === 'SPAN') {
+            const clickedYear = target.textContent;
+            if (clickedYear) {
+                setCurrentYear(() => parseInt(clickedYear));
+            }
+        }
+        setSelectingYear(() => !selectingYear);
+    }
+
+    const handleYearInc = (increment: boolean) => {
+        if (increment) { setCurrentYear((curr) => curr + 1); }
+        else { setCurrentYear((curr) => curr - 1); }
+    }
+
+    const LeftRightIconClick = (increment: boolean) => {
+        const result: { year: number; month: number } = getMonth(currYear, month, increment);
+        if (result.year !== currYear) {
+            setCurrentYear(() => result.year);
+        }
+        setMonth(result.month);
+    }
 
     const handleDayClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, currentMonthYear: string) => {
         const target = event.target as HTMLElement;
@@ -101,6 +106,7 @@ const DateTime: React.FC = () => {
             setNextInputValue(() => value);
         }
     };
+
     const handleCustomSubmit = (lastNextCustom: string) => {
         const parsedVal = lastNextCustom === 'last' ? parseInt(lastInputValue) : parseInt(nextInputValue);
         if (isNaN(parsedVal)) {
@@ -130,9 +136,9 @@ const DateTime: React.FC = () => {
                 <div className="yearSection">
                     <div><span>Year: </span></div>
                     <div><button className='btn' onClick={() => handleYearInc(false)}>-</button></div>
-                    <div className="selectedYear" onClick={handleSelectingYear}>
-                        <p>{currYear}</p>
-                        <span className='arrowIcons'>
+                    <div className="selectedYear" >
+                        <p onClick={handleSelectingYear}>{currYear}</p>
+                        <span onClick={handleSelectingYear} className='arrowIcons'>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -154,8 +160,6 @@ const DateTime: React.FC = () => {
                             <div className='listBtn'><button className='btnList' onClick={() => handleListBtnClick(true)}>+</button></div>
                         </div>}
                     </div>
-
-
                     <div><button className='btn' onClick={() => handleYearInc(true)}>+</button></div>
                 </div>
                 <div className='monthSection'>
@@ -267,7 +271,7 @@ const DateTime: React.FC = () => {
                 </div>
                 <div className="selectedDateList">
                     <div className='selectedDateListHeaderParent'><span className='selectedDateListHeader'>Selected Dates</span></div>
-                    { selectedStartDate && <div className='selectedDatesListItems'>
+                    {selectedStartDate && <div className='selectedDatesListItems'>
                         {
                             daysSectionData?.length > 0 && daysSectionData.map((item: DaysSectionDataModel) =>
                                 item.daysArray.map((date: { date: Date | null; selected: boolean }, indDate: number) =>
