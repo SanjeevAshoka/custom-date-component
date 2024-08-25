@@ -71,7 +71,6 @@ const DateTime: React.FC = () => {
         const result = dateRangeSelectedByUser(daysSectionData);
         if (result?.rangeSelected) {
             setSelectedStartDate(() => result.startEndDate[0]);
-
             setSelectedEndDate(() => formatDate(result.startEndDate[1]))
         } else {
             setSelectedStartDate(() => undefined);
@@ -108,8 +107,8 @@ const DateTime: React.FC = () => {
             setShowWarn('Please Provide Valid Input');
             setTimeout(() => setShowWarn(''), 4000);
         } else {
-            if (parsedVal > 30 || parsedVal < 1) {
-                setShowWarn('Please Provide Value in Range of 2 to 30');
+            if (parsedVal > 20 || parsedVal < 1) {
+                setShowWarn('Please Provide Value in Range of 2 to 20');
                 setTimeout(() => setShowWarn(''), 4000);
             } else {
                 if (lastNextCustom === 'last' && selectedStartDate) {
@@ -117,6 +116,7 @@ const DateTime: React.FC = () => {
                 }
                 else if (lastNextCustom === 'next' && selectedStartDate) {
                     setDaysSectionData(handleNextLastCustomDate(daysSectionData, false, parsedVal, selectedStartDate));
+
                 }
             }
 
@@ -185,7 +185,7 @@ const DateTime: React.FC = () => {
             </div>
             <div className="monthUiSection">
                 <div className='monthContentSection'>
-                    {daysSectionData?.length > 0 && daysSectionData.map((item: any, ind: number) => (
+                    {daysSectionData?.length > 0 && daysSectionData.map((item: DaysSectionDataModel, ind: number) => (
                         <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }} key={ind}>
                             <div className='monthHeader'><span>{item.monthYear}</span></div>
                             <div
@@ -238,34 +238,47 @@ const DateTime: React.FC = () => {
                         </svg>
                     </span>
                 </div>
-            </div>
-            <div className="startEndDate">
-                <header className='monthHeader headerEnd'>Select by Entering Value</header>
-                <div className="endDateSection">
-                    <div className='endSectionBtnAndInput'>
-                        <div className="content">
-                            <span>Last</span>
-                            <input type="text" value={lastInputValue} name='lastInput' onChange={handleCustomDaysSelected} />
-                            <span>Days</span>
-                        </div>
+                <div className="startEndDate">
+                    <header className='monthHeader headerEnd'>Select by Entering Value</header>
+                    <div className="endDateSection">
+                        <div className='endSectionBtnAndInput'>
+                            <div className="content">
+                                <span>Last</span>
+                                <input type="text" value={lastInputValue} name='lastInput' onChange={handleCustomDaysSelected} />
+                                <span>Days</span>
+                            </div>
 
-                        <div className='btnHolder'>
-                            <button className='btn' onClick={() => handleCustomSubmit('last')}>Submit</button>
-                        </div>
+                            <div className='btnHolder'>
+                                <button className='btn' onClick={() => handleCustomSubmit('last')}>Submit</button>
+                            </div>
 
-                    </div>
-                    <div className='endSectionBtnAndInput'>
-                        <div className="content">
-                            <p>Next</p>
-                            <input type="text" value={nextInputValue} name='nextInput' onChange={handleCustomDaysSelected} />
-                            <p>Days</p>
                         </div>
-                        <div className='btnHolder'>
-                            <button className='btn' onClick={() => handleCustomSubmit('next')}>Submit</button>
+                        <div className='endSectionBtnAndInput'>
+                            <div className="content">
+                                <p>Next</p>
+                                <input type="text" value={nextInputValue} name='nextInput' onChange={handleCustomDaysSelected} />
+                                <p>Days</p>
+                            </div>
+                            <div className='btnHolder'>
+                                <button className='btn' onClick={() => handleCustomSubmit('next')}>Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div className="selectedDateList">
+                    <div><span className='selectedDateListHeader'>Selected Dates</span></div>
+                    <div className='selectedDatesListItems'>
+                        {
+                            daysSectionData?.length > 0 && daysSectionData.map((item: DaysSectionDataModel) =>
+                                item.daysArray.map((date: { date: Date | null; selected: boolean }, indDate: number) =>
+                                    date.selected && date?.date ? <span className='dateItem' key={indDate}>{formatDate(date.date)}</span> : false
+                                )
+                            )
+                        }
+                    </div>
+                </div>
             </div>
+
         </div>
     );
 };

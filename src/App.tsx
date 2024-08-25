@@ -6,7 +6,7 @@ const App: React.FC = () => {
 
     return (
         <div className='appRoot'>
-            <h1 className='appHeader'>Select Start and End Date from UI below</h1>
+            <h1 className='appHeader'>React Custom Date Picker Component</h1>
             <DateTime />
         </div>
     );

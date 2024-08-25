@@ -1,4 +1,3 @@
-
 export interface DaysSectionDataModel {
     monthYear: string;
     daysArray: { date: Date | null; selected: boolean; }[];
@@ -253,5 +252,5 @@ export const handleNextLastCustomDate = (daysSectionData: DaysSectionDataModel[]
     }
 
 
-    return updatedDaysSectionData.slice(0, 2);
+    return updatedDaysSectionData;
 };
