@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import './DateTime.css';
-import { DaysSectionDataModel, dateRangeSelectedByUser, formatDate, getDayNames, getDaysSectionData, getMonth, getYearList, handleNextLastCustomDate, isWeekend, updateDaysSectionDataOnSelection } from './utils';
+import { DaysSectionDataModel, createDateFromDayAndMonthYear, dateRangeSelectedByUser, formatDate, getDayNames, getDaysSectionData, getMonth, getYearList, handleNextLastCustomDate, isWeekend, updateDaysSectionDataOnSelection } from './utils';
 
 
 const DateTime: React.FC = () => {
@@ -23,9 +23,6 @@ const DateTime: React.FC = () => {
         };
     }, []);
 
-    const handleSelectingYear = () => {
-        setSelectingYear(() => !selectingYear);
-    }
     useEffect(() => {
         setYearsArr(() => getYearList(currYear));
     }, [currYear]);
@@ -45,6 +42,10 @@ const DateTime: React.FC = () => {
             setSelectedEndDate(() => 'No Consecutive Dates Selected');
         }
     }, [daysSectionData]);
+
+    const handleSelectingYear = () => {
+        setSelectingYear(() => !selectingYear);
+    }
 
     const handleResize = () => {
         setScreenWidth(window.innerWidth);
@@ -91,7 +92,9 @@ const DateTime: React.FC = () => {
                 const dateText = dayElement.textContent;
                 if (dateText) {
                     const day = parseInt(dateText || '', 10);
-                    setDaysSectionData((daysSectionData) => updateDaysSectionDataOnSelection(day, currentMonthYear, daysSectionData));
+                    if (!isWeekend(createDateFromDayAndMonthYear(day, currentMonthYear))) {
+                        setDaysSectionData((daysSectionData) => updateDaysSectionDataOnSelection(day, currentMonthYear, daysSectionData));
+                    }
                 }
             }
         }
@@ -204,7 +207,7 @@ const DateTime: React.FC = () => {
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)' }} onClick={(e) => handleDayClick(e, item.monthYear)}>
                                     {item?.daysArray.map((day: { date: Date | null; selected: boolean; }, index: number) => (
                                         <div
-                                            className={`dayItem ${day.date && isWeekend(day.date) ? '' : 'dayelse'} ${day.date ? 'defaultCursor' : ''} ${day.selected ? 'selectedColor' : ''} ${day.date && formatDate(day.date) === formatDate(new Date()) ? 'todaysDate' : ''}`}
+                                            className={`dayItem ${day.date && isWeekend(day.date) ? '' : 'dayelse'} ${day.date ? 'defaultCursor' : ''} ${day.date && day.selected && !isWeekend(day.date) ? 'selectedColor' : ''} ${day.date && formatDate(day.date) === formatDate(new Date()) ? 'todaysDate' : ''}`}
                                             key={index}
                                         >
                                             {day?.date ? day.date.getDate() : ''}
@@ -271,7 +274,7 @@ const DateTime: React.FC = () => {
                 </div>
                 <div className="selectedDateList">
                     <div className='selectedDateListHeaderParent'><span className='selectedDateListHeader'>Selected Dates</span></div>
-                    {selectedStartDate && <div className='selectedDatesListItems'>
+                    <div className='selectedDatesListItems'>
                         {
                             daysSectionData?.length > 0 && daysSectionData.map((item: DaysSectionDataModel) =>
                                 item.daysArray.map((date: { date: Date | null; selected: boolean }, indDate: number) =>
@@ -279,7 +282,7 @@ const DateTime: React.FC = () => {
                                 )
                             )
                         }
-                    </div>}
+                    </div>
                 </div>
             </div>
 

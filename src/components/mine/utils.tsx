@@ -2,6 +2,7 @@ export interface DaysSectionDataModel {
     monthYear: string;
     daysArray: { date: Date | null; selected: boolean; }[];
 };
+
 export const getYearList = (currentYear: number, listNext: boolean = false, listprev: boolean = false): number[] => {
     const yearList: number[] = [];
     let endDate;
@@ -25,6 +26,7 @@ export const getYearList = (currentYear: number, listNext: boolean = false, list
 
     return yearList;
 }
+
 export const getDayNames = (): string[] => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const getDaysInMonth = (year: number, month: number) => {
@@ -37,7 +39,17 @@ export const getDaysInMonth = (year: number, month: number) => {
     return days;
 };
 export const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6;
+
 export const isWeekday = (date: Date) => !isWeekend(date);
+
+export const createDateFromDayAndMonthYear = (day: number, monthYearString: string): Date => {
+    const [monthName, year] = monthYearString.split(', ');
+    const tempDate = new Date(Date.parse(monthName + " 1, " + year));
+    const month = tempDate.getMonth();
+    const yearNumber = parseInt(year, 10);
+    return new Date(yearNumber, month, day);
+}
+
 export const formatDate = (date: Date | undefined): string => {
     if (typeof date === 'undefined') {
         return 'No Consecutive Dates Selected';
@@ -55,6 +67,7 @@ export const formatDate = (date: Date | undefined): string => {
 
     return `${day} ${monthName}, ${year}`;
 };
+
 export const getMonth = (year: number, month: number, next: boolean = true): { year: number; month: number } => {
     let resultMonth = month;
     let resultYear = year;
@@ -75,6 +88,7 @@ export const getMonth = (year: number, month: number, next: boolean = true): { y
 
     return { year: resultYear, month: resultMonth };
 };
+
 const transformDaysArray = (days: (Date | null)[]): { date: Date | null; selected: boolean; }[] => {
     return days.map(day => ({
         date: day,
@@ -186,6 +200,7 @@ const getNWeekdaysDate = (currentDate: Date, n: number, shouldForward: boolean):
     }
     return resultDate;
 };
+
 const updateSelectedDays = (daysSectionData: DaysSectionDataModel[], days: number, startingDate: Date): DaysSectionDataModel[] => {
 
     const findDateIndex = (daysArray: { date: Date | null; selected: boolean; }[], date: Date): number => {
