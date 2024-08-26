@@ -1,14 +1,16 @@
 import React from 'react';
-import './App.css'
-import DateTime from './components/mine/DateTime.tsx';
+import './App.css';
+import DateTime from './components/mine/DateTime';
+import { AppProvider } from './Context/Context';
+
 
 const App: React.FC = () => {
-
     return (
-        <div className='appRoot'>
-            <h1 className='appHeader'>React Custom Date Picker Component</h1>
-            <DateTime />
-        </div>
+        <AppProvider>
+            <div className='appRoot'>
+                <DateTime />
+            </div>
+        </AppProvider>
     );
 };
 

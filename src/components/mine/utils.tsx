@@ -27,8 +27,6 @@ export const getYearList = (currentYear: number, listNext: boolean = false, list
     return yearList;
 }
 
-export const getDayNames = (): string[] => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
 export const getDaysInMonth = (year: number, month: number) => {
     const days: Date[] = [];
     const date = new Date(year, month, 1);
@@ -42,6 +40,16 @@ export const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() ==
 
 export const isWeekday = (date: Date) => !isWeekend(date);
 
+export const toLocaleMonthYear = (dateYear: string, monthsArrLocal: string[]): string => {
+    const monthYearArr = dateYear.split(', ');
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const ind = monthNames.findIndex(monthName => monthName === monthYearArr[0]);
+    return `${monthsArrLocal[ind]}, ${monthYearArr[1]}`;
+}
+
 export const createDateFromDayAndMonthYear = (day: number, monthYearString: string): Date => {
     const [monthName, year] = monthYearString.split(', ');
     const tempDate = new Date(Date.parse(monthName + " 1, " + year));
@@ -50,7 +58,7 @@ export const createDateFromDayAndMonthYear = (day: number, monthYearString: stri
     return new Date(yearNumber, month, day);
 }
 
-export const formatDate = (date: Date | undefined): string => {
+export const formatDate = (date: Date | undefined, monthsArrLocal?: string[]): string => {
     if (typeof date === 'undefined') {
         return 'No Consecutive Dates Selected';
     }
@@ -64,6 +72,10 @@ export const formatDate = (date: Date | undefined): string => {
     const year = date.getFullYear();
 
     const monthName = monthNames[monthIndex];
+    if(monthsArrLocal){
+        const toLocalres = toLocaleMonthYear(`${monthName}, ${year}`, monthsArrLocal).split(', ');
+        return `${day} ${toLocalres[0]}, ${year}`;
+    }
 
     return `${day} ${monthName}, ${year}`;
 };
